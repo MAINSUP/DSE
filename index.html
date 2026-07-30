@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DSE — Data Science Enterprise</title>
+  <meta name="description" content="AI-powered tools for maritime professionals and renewable energy. MIA — Marine Inspection Assistant. YeSolar — Solar System Calculator.">
+<!-- Favicon -->
+    <link rel="icon" href="https://dse.codes/favicon.png" type="image/png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0f1e; color: #e2e8f0; line-height: 1.7; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-logo { font-size: 24px; font-weight: 800; color: #38bdf8; letter-spacing: 3px; }
+    .nav-sub { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px; display: block; }
+    .nav-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; margin-left: 24px; }
+
+    .hero { text-align: center; padding: 100px 24px 80px; }
+    .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; margin-bottom: 20px; }
+    .hero h1 span { background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 18px; color: rgba(255,255,255,0.5); max-width: 560px; margin: 0 auto 16px; }
+    .hero-sub { font-size: 14px; color: rgba(255,255,255,0.3); }
+
+    .product-section { max-width: 900px; margin: 60px auto 0; padding: 0 24px; }
+    .section-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .section-heading h2 { font-size: 20px; font-weight: 800; letter-spacing: 1px; color: rgba(255,255,255,0.85); text-transform: uppercase; }
+    .section-heading .section-line { flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
+
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin: 0 auto; }
+
+    .play-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 10px; font-weight: 700; font-size: 14px; background: rgba(74,222,128,0.15); color: #4ade80; border: 1px solid rgba(74,222,128,0.35); text-decoration: none; margin-top: 10px; }
+    .play-btn:hover { background: rgba(74,222,128,0.25); }
+
+    .product-card { border-radius: 24px; padding: 40px; text-decoration: none; color: inherit; display: block; transition: transform 0.2s, box-shadow 0.2s; }
+    .product-card:hover { transform: translateY(-4px); }
+
+    .card-mia { background: linear-gradient(135deg, #0f2a4a, #1a3a5c); border: 1px solid rgba(56,189,248,0.2); }
+    .card-mia:hover { box-shadow: 0 20px 60px rgba(56,189,248,0.15); }
+
+    .card-solar { background: linear-gradient(135deg, #2a1f0a, #3d2e0f); border: 1px solid rgba(251,191,36,0.2); }
+    .card-solar:hover { box-shadow: 0 20px 60px rgba(251,191,36,0.15); }
+
+    .product-icon { font-size: 48px; margin-bottom: 20px; }
+    .product-name { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .card-mia .product-name { color: #38bdf8; }
+    .card-solar .product-name { color: #fbbf24; }
+    .product-tagline { font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 24px; }
+    .product-features { list-style: none; margin-bottom: 32px; }
+    .product-features li { padding: 6px 0; font-size: 14px; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .product-features li:last-child { border-bottom: none; }
+    .card-mia .product-features li::before { content: "⚓ "; }
+    .card-solar .product-features li::before { content: "☀️ "; }
+
+    .product-btn { display: inline-block; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; }
+    .card-mia .product-btn { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
+    .card-solar .product-btn { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+
+    .status-badge { display: inline-block; padding: 3px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+    .status-live { background: rgba(34,197,94,0.2); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+    .status-soon { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+
+    .about { max-width: 700px; margin: 0 auto; padding: 60px 24px 80px; text-align: center; }
+    .about h2 { font-size: 28px; font-weight: 800; margin-bottom: 16px; }
+    .about p { font-size: 16px; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
+
+    footer { padding: 32px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
+    footer a { color: rgba(255,255,255,0.4); text-decoration: none; margin: 0 12px; font-size: 13px; }
+    footer p { color: rgba(255,255,255,0.25); font-size: 12px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div>
+    <div class="nav-logo">DSE</div>
+    <span class="nav-sub">DATA SCIENCE ENTERPRISE</span>
+  </div>
+  <div>
+    <a href="mailto:info@dse.codes">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>Building <span>AI tools</span><br>for real industries</h1>
+  <p>We create practical AI-powered applications for maritime professionals and renewable energy.</p>
+  <p class="hero-sub">Based in Ukraine · Serving professionals worldwide</p>
+</div>
+
+<div class="product-section">
+  <div class="section-heading">
+    <h2>Maritime Industry</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="products">
+
+    <!-- MIA -->
+    <div class="product-card card-mia">
+      <a href="https://mia.dse.codes" style="text-decoration:none; color:inherit; display:block;">
+        <div class="product-icon">⚓</div>
+        <div class="product-name">MIA <span class="status-badge status-live">LIVE</span></div>
+        <div class="product-tagline">Marine Inspection Assistant</div>
+        <ul class="product-features">
+          <li>PSC, SIRE 2.0, CDI, ISM, USCG, ISPS</li>
+          <li>AI answers with regulation references</li>
+          <li>Voice input & Photo OCR</li>
+          <li>Mock interview practice</li>
+          <li>PDF document analysis</li>
+          <li>Fleet SMS integration</li>
+          <li>VR inspection (Soon)</li>
+        </ul>
+        <span class="product-btn">Learn more →</span>
+      </a>
+     
+    </div>
+    <!-- APEX Marine -->
+    <a href="https://apex.dse.codes" class="product-card card-mia">
+      <div class="product-icon">🔧</div>
+      <div class="product-name">APEX Marine <span class="status-badge status-soon">SOON</span> <span class="status-badge status-live">DEMO AVAILABLE</span></div>
+      <div class="product-tagline">AI Diesel Engine Fault Diagnostic System</div>
+      <ul class="product-features">
+        <li>Cylinder leakage detection (0/8/16%)</li>
+        <li>Injector wear diagnostics</li>
+        <li>Dual AI engine: CNN-LSTM + SVM</li>
+        <li>Photo/scan indicator diagram digitisation</li>
+        <li>Offline-capable with cloud sync</li>
+      </ul>
+      <span class="product-btn">Get info & demo →</span>
+    </a>
+
+    <!-- SeaVie -->
+    <a href="https://seavie.dse.codes" class="product-card card-mia">
+      <div class="product-icon">💼</div>
+      <div class="product-name">SeaVie<span class="status-badge status-live">SOON</span></div>
+      <div class="product-tagline">Seafares Wallet</div>
+      <ul class="product-features">
+        <li>All your docs in one place</li>
+        <li>Quality scans with use of AI tools</li>
+        <li>Automated in-app CV generation</li>
+        <li>CV instant share in one click</li>
+        <li>Fleet integration capability</li>
+      </ul>
+      <span class="product-btn">Learn more →</span>
+    </a>
+
+  </div>
+</div>
+
+<div class="product-section">
+  <div class="section-heading">
+    <h2>Renewable Energy</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="products">
+
+    <!-- YeSolar -->
+    <a href="https://yesolar.dse.codes" class="product-card card-solar">
+      <div class="product-icon">☀️</div>
+      <div class="product-name">YeSolar <span class="status-badge status-soon">SOON</span></div>
+      <div class="product-tagline">Solar System Calculator</div>
+      <ul class="product-features">
+        <li>Roof scan via satellite imagery</li>
+        <li>AR measurement for new buildings</li>
+        <li>Solar panel count & energy output</li>
+        <li>Installer marketplace & map</li>
+        <li>PDF reports for clients</li>
+      </ul>
+      <span class="product-btn">Coming soon →</span>
+    </a>
+
+  </div>
+</div>
+
+<div class="about"> <h2>About DSE</h2> <p> DSE (Data Science Enterprise) builds AI-native software for maritime and industrial operations. </p> <p>Being founded by maritime expert, DSE combines deep frontline industry knowledge with expertise in software engineering, data science, and applied AI systems. </p> <p> We focus on high-impact operational domains where legacy tools and generic software fail to meet real-world requirements — particularly in inspection workflows, compliance, reporting, and decision support. </p> <p> Our mission is to digitize and optimize complex industrial processes using practical, reliable AI systems built on real operational experience. </p> <p style="margin-top: 20px;"> <a href="mailto:info@dse.codes" style="color: #38bdf8; text-decoration: none; font-weight: 600;"> info@dse.codes </a> </p> </div>
+
+<footer>
+  <div>
+   
+    <a href="mailto:info@dse.codes">Contact</a>
+  </div>
+  <p>© 2026 DSE — Data Science Enterprise. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
