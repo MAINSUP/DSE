@@ -1,4 +1,4 @@
-#v4
+#v5
 
 name: Deploy Frontend to VPS
 
@@ -19,12 +19,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: 22
 
       - name: Install dependencies and build
         run: |
-          npm ci
+          npm install
           npm run build
 
       - name: Deploy to VPS
