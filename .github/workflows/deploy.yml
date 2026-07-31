@@ -1,0 +1,39 @@
+name: Deploy Frontend to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Завантажуємо код із репозиторію
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Налаштовуємо Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. Встановлюємо залежності та збираємо проєкт
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
+
+      # 4. Копіюємо зібрану папку dist/build на VPS через rsync
+      - name: Sync dist folder to VPS
+        uses: appleboy/rsync-action@v0.1.10
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "dist/"  # Якщо Vite / React Native Web. Змініть на "build/", якщо Create React App
+          target: "/var/www/dse.codes/dist" # Вкажіть потрібну папку для сайту
+          delete: true     # Видаляє застарілі файли на VPS, яких немає у новій збірці
